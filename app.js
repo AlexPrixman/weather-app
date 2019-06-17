@@ -1,4 +1,4 @@
-// const places = require('./places/places');
+const places = require('./places/places');
 const weather = require('./weather/weather');
 
 const argv = require('yargs').options({
@@ -18,14 +18,15 @@ const argv = require('yargs').options({
 const getInfo = async(location) => {
 
     try {
-        const coords = await getLugarLatLng(location);
+        const coords = await places.getLugarLatLng(location);
         const temp = await weather.getWeather(coords.lat, coords.lon);
-        return `${ coords.location }'s weather is ${ temp }.`;
+        return `${ coords.location }'s current weather is ${ temp }.`;
     } catch (e) {
         return `The weather of ${ location } could not be determined.`;
     }
 
 }
+
 
 getInfo(argv.location)
     .then(console.log)
